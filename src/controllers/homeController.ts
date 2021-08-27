@@ -3,15 +3,12 @@ import { Request, Response } from 'express';
 import { Product } from '../models/Product';
 
 import { sequelize } from '../instances/pg';
+import { User } from '../models/users';
+
 
 export const home = async (req: Request, res: Response)=>{
-
-    try{
-        await sequelize.authenticate();
-        console.log("Conexão estabelecida!");
-    } catch(error){
-        console.log(`Erro de conexão.\nStatus: ${error}`);
-    }
+    let users = await User.findAll();
+    console.log(JSON.stringify(users));
 
     let age: number = 90;
     let showOld: boolean = false;
@@ -29,6 +26,7 @@ export const home = async (req: Request, res: Response)=>{
         showOld,
         products: list,
         expensives: expensiveList,
-        frasesDoDia: []
+        frasesDoDia: [],
+        users
     });
 };
